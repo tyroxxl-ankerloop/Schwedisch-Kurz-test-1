@@ -584,6 +584,7 @@ const winMessages = [
 let speechVoices = [];
 let voiceIndex = 0;
 let lastHoverCopy = { char: "", time: 0 };
+let selectedVoiceName = localStorage.getItem("svenska-a1-voice") || "";
 
 const defaultState = {
   activeModule: "intro",
@@ -616,42 +617,78 @@ function normalize(text) {
 function refreshVoices() {
   if (!("speechSynthesis" in window)) return;
   speechVoices = window.speechSynthesis.getVoices();
+  renderVoiceSelectors();
 }
 
 function getSwedishVoice() {
   const swedishVoices = speechVoices.filter((voice) => voice.lang?.toLowerCase().startsWith("sv"));
-  const pool = swedishVoices.length ? swedishVoices : speechVoices;
-  if (!pool.length) return null;
-  const voice = pool[voiceIndex % pool.length];
+  if (!swedishVoices.length) return null;
+  const selected = swedishVoices.find((voice) => voice.name === selectedVoiceName);
+  if (selected) return selected;
+  const voice = swedishVoices[voiceIndex % swedishVoices.length];
   voiceIndex += 1;
   return voice;
 }
 
-function speakSwedish(text) {
+function speakSwedish(text, mode = "normal") {
   if (!("speechSynthesis" in window)) {
     alert("Dein Browser unterstützt hier keine Sprachausgabe.");
     return;
   }
 
+  const voice = getSwedishVoice();
+  if (!voice) {
+    alert("Keine schwedische Stimme gefunden. Installiere in Windows eine schwedische Sprache/Stimme oder nutze Edge/Chrome mit einer sv-SE Stimme.");
+    return;
+  }
+
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "sv-SE";
-  utterance.rate = 0.82;
-  utterance.pitch = voiceIndex % 2 === 0 ? 1.04 : 0.9;
-  const voice = getSwedishVoice();
-  if (voice) utterance.voice = voice;
+  utterance.rate = mode === "slow" ? 0.68 : 0.86;
+  utterance.pitch = 1;
+  utterance.voice = voice;
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
 }
 
 function renderAudioRows(sentences) {
-  return `<div class="audio-list">${sentences
+  const swedishVoices = speechVoices.filter((voice) => voice.lang?.toLowerCase().startsWith("sv"));
+  const voiceOptions = swedishVoices
+    .map((voice) => `<option value="${voice.name}" ${voice.name === selectedVoiceName ? "selected" : ""}>${voice.name} (${voice.lang})</option>`)
+    .join("");
+  const status = swedishVoices.length
+    ? `${swedishVoices.length} schwedische Stimme(n) gefunden.`
+    : "Keine sv-SE Stimme gefunden. Browser-Stimme wäre nicht authentisch genug.";
+
+  return `<div class="audio-toolbar">
+      <select class="voice-select" aria-label="Schwedische Stimme auswählen" ${swedishVoices.length ? "" : "disabled"}>
+        ${voiceOptions || "<option>Keine schwedische Stimme</option>"}
+      </select>
+      <span class="voice-status">${status}</span>
+    </div>
+    <div class="audio-list">${sentences
     .map(
       (sentence) => `<div class="audio-row">
         <span>${sentence}</span>
-        <button class="speak-button" data-speak="${encodeURIComponent(sentence)}" type="button" title="Anhören">▶</button>
+        <div class="speak-actions">
+          <button class="speak-button" data-speak="${encodeURIComponent(sentence)}" data-speed="normal" type="button" title="Normal anhören">▶</button>
+          <button class="speak-button slow" data-speak="${encodeURIComponent(sentence)}" data-speed="slow" type="button" title="Langsam anhören">🐢</button>
+        </div>
       </div>`
     )
     .join("")}</div>`;
+}
+
+function renderVoiceSelectors() {
+  const selectors = document.querySelectorAll(".voice-select");
+  if (!selectors.length) return;
+  const swedishVoices = speechVoices.filter((voice) => voice.lang?.toLowerCase().startsWith("sv"));
+  selectors.forEach((select) => {
+    select.innerHTML = swedishVoices
+      .map((voice) => `<option value="${voice.name}" ${voice.name === selectedVoiceName ? "selected" : ""}>${voice.name} (${voice.lang})</option>`)
+      .join("");
+    select.disabled = swedishVoices.length === 0;
+  });
 }
 
 function getActiveModule() {
@@ -902,7 +939,14 @@ document.querySelectorAll("[data-copy-char]").forEach((button) => {
 document.getElementById("feedback").addEventListener("click", (event) => {
   const button = event.target.closest("[data-speak]");
   if (!button) return;
-  speakSwedish(decodeURIComponent(button.dataset.speak));
+  speakSwedish(decodeURIComponent(button.dataset.speak), button.dataset.speed || "normal");
+});
+
+document.getElementById("feedback").addEventListener("change", (event) => {
+  const select = event.target.closest(".voice-select");
+  if (!select) return;
+  selectedVoiceName = select.value;
+  localStorage.setItem("svenska-a1-voice", selectedVoiceName);
 });
 
 document.getElementById("resetBtn").addEventListener("click", () => {
