@@ -373,6 +373,133 @@ const modules = [
   }
 ];
 
+const secondPass = {
+  start: {
+    tasks: ["Schreibe: Guten Morgen.", "Schreibe: Ja.", "Schreibe: Nein.", "Schreibe: Bitte / gern."],
+    expected: ["God morgon.", "Ja.", "Nej.", "Varsågod."]
+  },
+  intro: {
+    tasks: ["Schreibe: Ich bin Jay.", "Schreibe: Ich wohne in der Schweiz.", "Schreibe: Ich komme nicht aus Schweden.", "Schreibe: Ich möchte Schwedisch lernen."],
+    expected: ["Jag är Jay.", "Jag bor i Schweiz.", "Jag kommer inte från Sverige.", "Jag vill lära mig svenska."]
+  },
+  questions: {
+    tasks: ["Frage: Wie heißt du?", "Frage: Wo wohnst du?", "Frage: Woher kommst du?", "Frage: Sprichst du Schwedisch?"],
+    expected: ["Vad heter du?", "Var bor du?", "Varifrån kommer du?", "Talar du svenska?"]
+  },
+  pronouns: {
+    tasks: ["Schreibe: Sie ist nett.", "Schreibe: Ihr seid hier.", "Schreibe: Sie sind in Schweden.", "Schreibe: Ich bin nicht müde."],
+    expected: ["Hon är snäll.", "Ni är här.", "De är i Sverige.", "Jag är inte trött."]
+  },
+  numbers: {
+    tasks: ["Schreibe: Ich bin 40 Jahre alt.", "Schreibe: Es kostet 50 Kronen.", "Schreibe: Ich habe ein Kind.", "Schreibe: Ich habe keine Kinder."],
+    expected: ["Jag är 40 år.", "Det kostar 50 kronor.", "Jag har ett barn.", "Jag har inga barn."]
+  },
+  alphabet: {
+    tasks: ["Schreibe: Wie sagt man das auf Schwedisch?", "Schreibe: Ich verstehe nicht.", "Schreibe: Sprichst du Englisch?", "Schreibe: Sprich langsam bitte."],
+    expected: ["Hur säger man det på svenska?", "Jag förstår inte.", "Talar du engelska?", "Tala långsamt, tack."]
+  },
+  languages: {
+    tasks: ["Schreibe: Ich kann Deutsch sprechen.", "Schreibe: Ich will Schwedisch sprechen.", "Schreibe: Du lernst Schwedisch.", "Schreibe: Meine Mutter lernt Deutsch."],
+    expected: ["Jag kan tala tyska.", "Jag vill tala svenska.", "Du lär dig svenska.", "Min mamma lär sig tyska."]
+  },
+  family: {
+    tasks: ["Schreibe: Meine Mutter wohnt hier.", "Schreibe: Mein Vater spricht Deutsch.", "Schreibe: Hast du Geschwister?", "Schreibe: Ich habe keinen Vater hier."],
+    expected: ["Min mamma bor här.", "Min pappa talar tyska.", "Har du syskon?", "Jag har ingen pappa här."]
+  },
+  possessive: {
+    tasks: ["Schreibe: Mein Haus ist klein.", "Schreibe: Meine Wohnung ist groß.", "Schreibe: Meine Freunde wohnen hier.", "Schreibe: Dein Vater arbeitet."],
+    expected: ["Mitt hus är litet.", "Min lägenhet är stor.", "Mina vänner bor här.", "Din pappa arbetar."]
+  },
+  work: {
+    tasks: ["Frage: Was arbeitest du?", "Frage: Wo arbeitest du?", "Schreibe: Ich arbeite bei einem Unternehmen.", "Schreibe: Ich arbeite nicht mit Logistik."],
+    expected: ["Vad arbetar du med?", "Var arbetar du?", "Jag arbetar på ett företag.", "Jag arbetar inte med logistik."]
+  },
+  articles: {
+    tasks: ["Schreibe: eine Wohnung.", "Schreibe: die Wohnung.", "Schreibe: ein Zimmer.", "Schreibe: das Zimmer."],
+    expected: ["En lägenhet.", "Lägenheten.", "Ett rum.", "Rummet."]
+  },
+  plural: {
+    tasks: ["Schreibe: ein Freund.", "Schreibe: viele Freunde.", "Schreibe: eine Schwester.", "Schreibe: zwei Schwestern."],
+    expected: ["En vän.", "Många vänner.", "En syster.", "Två systrar."]
+  },
+  adjectives: {
+    tasks: ["Schreibe: Die Wohnung ist klein.", "Schreibe: Das Zimmer ist klein.", "Schreibe: Kaffee ist gut.", "Schreibe: Ich bin nicht krank."],
+    expected: ["Lägenheten är liten.", "Rummet är litet.", "Kaffe är gott.", "Jag är inte sjuk."]
+  },
+  day: {
+    tasks: ["Schreibe: Heute arbeite ich.", "Schreibe: Ich schlafe.", "Schreibe: Ich gehe nach Hause.", "Schreibe: Was machst du?"],
+    expected: ["Idag jobbar jag.", "Jag sover.", "Jag går hem.", "Vad gör du?"]
+  },
+  time: {
+    tasks: ["Schreibe: Morgen arbeite ich um acht.", "Schreibe: Am Abend lese ich.", "Schreibe: Heute trinke ich Kaffee.", "Schreibe: Es ist halb neun."],
+    expected: ["Imorgon jobbar jag klockan åtta.", "På kvällen läser jag.", "Idag dricker jag kaffe.", "Klockan är halv nio."]
+  },
+  food: {
+    tasks: ["Schreibe: Ich möchte Wasser.", "Schreibe: Ich trinke keinen Kaffee.", "Schreibe: Haben Sie Brot?", "Schreibe: Das ist gut."],
+    expected: ["Jag vill ha vatten.", "Jag dricker inte kaffe.", "Har ni bröd?", "Det är gott."]
+  },
+  shopping: {
+    tasks: ["Schreibe: Ich suche ein Hemd.", "Schreibe: Haben Sie das in Schwarz?", "Schreibe: Das ist billig.", "Schreibe: Ich bezahle mit Karte."],
+    expected: ["Jag letar efter en skjorta.", "Har ni den i svart?", "Det är billigt.", "Jag betalar med kort."]
+  },
+  directions: {
+    tasks: ["Schreibe: Wo liegt das Café?", "Schreibe: Biegen Sie rechts ab.", "Schreibe: Es ist weit weg.", "Schreibe: Es liegt neben dem Bahnhof."],
+    expected: ["Var ligger kaféet?", "Sväng höger.", "Det är långt borta.", "Det ligger bredvid stationen."]
+  },
+  travel: {
+    tasks: ["Schreibe: Ich fahre mit dem Bus.", "Schreibe: Der Zug ist spät.", "Schreibe: Ich gehe zum Bahnhof.", "Schreibe: Ich komme aus Zürich."],
+    expected: ["Jag åker buss.", "Tåget är sent.", "Jag går till stationen.", "Jag kommer från Zürich."]
+  },
+  home: {
+    tasks: ["Schreibe: Ich habe eine Küche.", "Schreibe: Das Zimmer ist groß.", "Schreibe: Die Wohnung liegt in Zürich.", "Schreibe: Ich wohne nicht in Stockholm."],
+    expected: ["Jag har ett kök.", "Rummet är stort.", "Lägenheten ligger i Zürich.", "Jag bor inte i Stockholm."]
+  },
+  weather: {
+    tasks: ["Schreibe: Es ist warm heute.", "Schreibe: Es schneit.", "Schreibe: Es ist schönes Wetter.", "Schreibe: Im Winter ist es kalt."],
+    expected: ["Det är varmt idag.", "Det snöar.", "Det är fint väder.", "På vintern är det kallt."]
+  },
+  health: {
+    tasks: ["Schreibe: Ich habe Bauchschmerzen.", "Schreibe: Ich bin müde.", "Schreibe: Ich brauche Hilfe.", "Schreibe: Wo ist die Apotheke?"],
+    expected: ["Jag har ont i magen.", "Jag är trött.", "Jag behöver hjälp.", "Var ligger apoteket?"]
+  },
+  inte: {
+    tasks: ["Schreibe: Ich arbeite nicht heute.", "Schreibe: Ich will keinen Kaffee.", "Schreibe: Ich kann nicht kommen.", "Schreibe: Ich bin nicht krank."],
+    expected: ["Jag jobbar inte idag.", "Jag vill inte ha kaffe.", "Jag kan inte komma.", "Jag är inte sjuk."]
+  },
+  modal: {
+    tasks: ["Schreibe: Ich werde morgen arbeiten.", "Schreibe: Ich kann heute kommen.", "Schreibe: Ich will Kaffee trinken.", "Schreibe: Ich möchte ein Ticket kaufen."],
+    expected: ["Jag ska jobba imorgon.", "Jag kan komma idag.", "Jag vill dricka kaffe.", "Jag vill köpa en biljett."]
+  },
+  wordorder: {
+    tasks: ["Schreibe: Gestern war ich zu Hause.", "Schreibe: Jetzt trinke ich Kaffee.", "Schreibe: Im Sommer reise ich nach Schweden.", "Schreibe: Heute bin ich müde."],
+    expected: ["Igår var jag hemma.", "Nu dricker jag kaffe.", "På sommaren reser jag till Sverige.", "Idag är jag trött."]
+  },
+  prepositions: {
+    tasks: ["Schreibe: Ich arbeite mit Jay.", "Schreibe: Ich gehe zur Arbeit.", "Schreibe: Ich bin zu Hause.", "Schreibe: Ich wohne in einer Wohnung."],
+    expected: ["Jag arbetar med Jay.", "Jag går till jobbet.", "Jag är hemma.", "Jag bor i en lägenhet."]
+  },
+  past: {
+    tasks: ["Schreibe: Gestern trank ich Kaffee.", "Schreibe: Gestern lernte ich Schwedisch.", "Schreibe: Ich war müde.", "Schreibe: Ich hatte ein Auto."],
+    expected: ["Igår drack jag kaffe.", "Igår läste jag svenska.", "Jag var trött.", "Jag hade en bil."]
+  },
+  future: {
+    tasks: ["Schreibe: Morgen werde ich Kaffee trinken.", "Schreibe: Nächste Woche reise ich.", "Schreibe: Ich werde ein Buch lesen.", "Schreibe: Ich will in Schweden wohnen."],
+    expected: ["Imorgon ska jag dricka kaffe.", "Nästa vecka reser jag.", "Jag ska läsa en bok.", "Jag vill bo i Sverige."]
+  },
+  imperative: {
+    tasks: ["Schreibe: Hilf mir bitte.", "Schreibe: Öffne die Tür.", "Schreibe: Komm hierher.", "Schreibe: Lies den Satz."],
+    expected: ["Hjälp mig gärna.", "Öppna dörren.", "Kom hit.", "Läs meningen."]
+  },
+  dialog: {
+    tasks: ["Schreibe einen Mini-Dialog: Frage nach dem Namen.", "Antworte mit deinem Namen.", "Frage nach dem Wohnort.", "Antworte mit Turbenthal."],
+    expected: ["Vad heter du?", "Jag heter Jay.", "Var bor du?", "Jag bor i Turbenthal."]
+  },
+  a1review: {
+    tasks: ["Schreibe 4-6 Sätze über deinen Alltag.", "Nutze eine Zeitangabe am Satzanfang.", "Nutze mindestens einmal inte.", "Nutze mindestens einmal Vergangenheit oder Zukunft."],
+    expected: ["Idag jobbar jag.", "Jag dricker kaffe.", "Jag jobbar inte i Zürich.", "Imorgon ska jag lära mig svenska."]
+  }
+};
+
 const rules = [
   { pattern: /\bja\s+(heter|kommer|bor|talar|kan|vill|har|arbetar|jobbar|äter|dricker|läser|lär)\b/i, label: "ja/jag", fix: "Schreibe jag für ich. Ja bedeutet nur ja.", example: "Jag heter Jay." },
   { pattern: /\bjag am\b|\bjag ist\b|\bjag bin\b/i, label: "är", fix: "Sein heißt auf Schwedisch är.", example: "Jag är Jay." },
@@ -486,8 +613,17 @@ function getActiveModule() {
   return modules.find((module) => module.id === state.activeModule) || modules[0];
 }
 
+function getExercise(module) {
+  const moduleState = state.modules[module.id] || { correctStreak: 0 };
+  if (moduleState.correctStreak === 1 && secondPass[module.id]) {
+    return secondPass[module.id];
+  }
+  return module;
+}
+
 function render() {
   const active = getActiveModule();
+  const exercise = getExercise(active);
   const moduleState = state.modules[active.id];
   document.getElementById("moduleTag").textContent = active.tag;
   document.getElementById("moduleTitle").textContent = active.title;
@@ -495,8 +631,9 @@ function render() {
   document.getElementById("todayCount").textContent = state.today;
   document.getElementById("masteredCount").textContent = Object.values(state.modules).filter((item) => item.status === "verstanden").length;
   document.getElementById("errorCount").textContent = state.totalErrors;
-  document.getElementById("taskTitle").textContent = "Schreibe maximal 4-6 kurze Sätze.";
-  document.getElementById("taskList").innerHTML = active.tasks.map((task) => `<li>${task}</li>`).join("");
+  document.getElementById("taskTitle").textContent =
+    moduleState.correctStreak === 1 ? "Runde 2: anderes Muster, gleicher Bereich." : "Runde 1: schreibe maximal 4-6 kurze Sätze.";
+  document.getElementById("taskList").innerHTML = exercise.tasks.map((task) => `<li>${task}</li>`).join("");
   renderModules();
   renderErrorFocus();
 }
@@ -506,7 +643,8 @@ function renderModules() {
     .map((module) => {
       const item = state.modules[module.id];
       const active = module.id === state.activeModule ? " active" : "";
-      return `<button class="module-button${active}" data-module="${module.id}" type="button">
+      const mastered = item.status === "verstanden" ? " mastered" : "";
+      return `<button class="module-button${active}${mastered}" data-module="${module.id}" type="button">
         ${module.title}
         <span>${item.status} · Serie ${item.correctStreak}/2</span>
       </button>`;
@@ -632,7 +770,8 @@ document.getElementById("answerForm").addEventListener("submit", (event) => {
   const answer = document.getElementById("answerInput").value.trim();
   if (!answer) return;
   const active = getActiveModule();
-  const result = checkAnswer(answer, active);
+  const exercise = getExercise(active);
+  const result = checkAnswer(answer, exercise);
   const justMastered = applyResult(result, active);
   render();
   renderFeedback(result, active);
