@@ -423,16 +423,26 @@ const rules = [
 ];
 
 const roastMessages = [
-  "Hier hast du verkackt. Nicht dramatisch, aber Schwedisch hat es gesehen.",
-  "Autsch. Der Satz ist nicht tot, aber er braucht dringend Erste Hilfe.",
-  "Das war mutig. Leider war Mut hier nicht die richtige Grammatikregel.",
-  "Fast Schwedisch. Also ungefähr so, wie ein Fahrrad fast ein Volvo ist.",
-  "Der Satz wollte nach Stockholm, ist aber grammatikalisch in Dietikon ausgestiegen.",
-  "Kleine Sprachkatastrophe. Zum Glück sind wir noch auf A1 und niemand wurde verletzt.",
-  "Das war kein Fehler, das war ein pädagogischer Unfall mit Lernpotenzial.",
-  "Schwedisch sagt nein. Ich sage: reparieren wir den Schaden.",
-  "Hier brennt kurz die Grammatik. Wasser holen, Regel anschauen, weiter.",
-  "Du hast gerade ein neues Kapitel im Buch der vermeidbaren Fehler geschrieben."
+  "Hier hast du sauber verkackt. Nicht schlimm, wir kratzen die Grammatikreste vom Boden und machen weiter.",
+  "Autsch. Dieser Satz ist mit Vollgas gegen die Wand gefahren und hat noch gehupt.",
+  "Das war mutig. Leider auch falsch. Mut ersetzt keine Grammatik, du sprachlicher Kamikaze.",
+  "Fast Schwedisch. So wie ein brennender Einkaufswagen fast ein Volvo ist.",
+  "Der Satz wollte nach Stockholm, ist aber besoffen in Dietikon ausgestiegen.",
+  "Das war eine kleine Sprachkatastrophe mit Ansage. Immerhin brennt nur A1, nicht ganz Schweden.",
+  "Glückwunsch, du hast gerade Grammatik in eine offene Baugrube geschubst. Wir holen sie wieder raus.",
+  "Schwedisch hat diesen Satz gelesen und kurz überlegt, den Notruf zu wählen.",
+  "Hier hat die Grammatik kurz Feuer gefangen. Kein Drama, aber leg bitte das Benzin weg.",
+  "Das war kein Satz, das war ein Unfallbericht mit Umlauten.",
+  "Du hast das Muster gesehen, angelächelt und dann frontal ignoriert. Beeindruckend konsequent falsch.",
+  "Dieser Satz hat A1-Niveau gesucht und unterwegs seine Schuhe verloren.",
+  "Grammatikalisch war das gerade ein Sturz die Treppe runter. Aber hey, unten lernen wir weiter.",
+  "Das war so falsch, dass sogar Google Translate kurz einen Therapeuten gebraucht hätte.",
+  "Du bist nicht gescheitert. Du hast nur sehr kreativ demonstriert, wie man es nicht macht.",
+  "Der Satz lebt noch, aber nur, weil A1 keine Intensivstation hat.",
+  "Hier riecht es nach verbranntem Satzbau. Fenster auf, Regel anschauen, nochmal.",
+  "Das war sprachlich ein Griff ins Klo. Hände waschen, Korrektur lesen, weiter.",
+  "Dein Schwedisch hat gerade versucht zu rennen, ist aber über 'inte' gestolpert und liegen geblieben.",
+  "Wunderschön daneben. Nicht elegant, nicht korrekt, aber wenigstens eindeutig reparierbar."
 ];
 
 const winMessages = [
