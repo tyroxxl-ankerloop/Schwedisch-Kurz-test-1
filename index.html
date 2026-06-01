@@ -96,6 +96,13 @@
       <div class="glitter glitter-c"></div>
     </div>
 
-    <script src="app.js"></script>
+    <script>
+      const build = "20260601-voci2";
+      if (localStorage.getItem("svenska-a1-build") !== build) {
+        localStorage.removeItem("svenska-a1-state");
+        localStorage.setItem("svenska-a1-build", build);
+      }
+    </script>
+    <script src="app.js?v=20260601-voci2"></script>
   </body>
 </html>
