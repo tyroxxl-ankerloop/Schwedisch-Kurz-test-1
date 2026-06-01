@@ -581,6 +581,9 @@ const winMessages = [
   "Richtig. Kurz genießen, dann weiterarbeiten."
 ];
 
+let speechVoices = [];
+let voiceIndex = 0;
+
 const defaultState = {
   activeModule: "intro",
   today: 0,
@@ -607,6 +610,47 @@ function normalize(text) {
     .replace(/[.!?]/g, "")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function refreshVoices() {
+  if (!("speechSynthesis" in window)) return;
+  speechVoices = window.speechSynthesis.getVoices();
+}
+
+function getSwedishVoice() {
+  const swedishVoices = speechVoices.filter((voice) => voice.lang?.toLowerCase().startsWith("sv"));
+  const pool = swedishVoices.length ? swedishVoices : speechVoices;
+  if (!pool.length) return null;
+  const voice = pool[voiceIndex % pool.length];
+  voiceIndex += 1;
+  return voice;
+}
+
+function speakSwedish(text) {
+  if (!("speechSynthesis" in window)) {
+    alert("Dein Browser unterstützt hier keine Sprachausgabe.");
+    return;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "sv-SE";
+  utterance.rate = 0.82;
+  utterance.pitch = voiceIndex % 2 === 0 ? 1.04 : 0.9;
+  const voice = getSwedishVoice();
+  if (voice) utterance.voice = voice;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+}
+
+function renderAudioRows(sentences) {
+  return `<div class="audio-list">${sentences
+    .map(
+      (sentence) => `<div class="audio-row">
+        <span>${sentence}</span>
+        <button class="speak-button" data-speak="${encodeURIComponent(sentence)}" type="button" title="Anhören">▶</button>
+      </div>`
+    )
+    .join("")}</div>`;
 }
 
 function getActiveModule() {
@@ -694,7 +738,7 @@ function applyResult(result, active) {
   return !wasMastered && moduleState.status === "verstanden";
 }
 
-function renderFeedback(result, active) {
+function renderFeedback(result, active, exercise) {
   const feedback = document.getElementById("feedback");
   const nextModule = modules[(modules.findIndex((module) => module.id === active.id) + 1) % modules.length];
   const moduleState = state.modules[active.id];
@@ -704,6 +748,7 @@ function renderFeedback(result, active) {
 
   if (result.passed) {
     items.push(`<div class="feedback-item ok"><strong>${win}</strong>Das Muster sitzt in dieser Aufgabe. Serie: ${moduleState.correctStreak}/2.</div>`);
+    items.push(`<div class="feedback-item ok"><strong>Aussprache freigeschaltet</strong>Klick auf Play, um die schwedischen Lösungssätze zu hören.${renderAudioRows(exercise.expected)}</div>`);
   } else {
     items.push(`<div class="feedback-item warn"><strong>${roast}</strong>Ich zeige dir nur die wichtigsten Punkte, damit es A1-gerecht bleibt.</div>`);
   }
@@ -733,6 +778,62 @@ function triggerCelebration() {
   celebration.classList.remove("fly");
   void celebration.offsetWidth;
   celebration.classList.add("fly");
+}
+
+async function copyCharacter(char, button) {
+  const fallbackCopy = () => {
+    const helper = document.createElement("textarea");
+    helper.value = char;
+    helper.setAttribute("readonly", "");
+    helper.style.position = "fixed";
+    helper.style.top = "-1000px";
+    helper.style.opacity = "0";
+    document.body.appendChild(helper);
+    helper.focus();
+    helper.select();
+    const copied = document.execCommand("copy");
+    helper.remove();
+    return copied;
+  };
+
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(char);
+    } else {
+      fallbackCopy();
+    }
+
+    button.classList.add("copied");
+    button.dataset.tooltip = "copied";
+    button.textContent = "✓";
+    setTimeout(() => {
+      button.classList.remove("copied");
+      button.dataset.tooltip = "copy";
+      button.textContent = char;
+    }, 900);
+  } catch {
+    if (fallbackCopy()) {
+      button.classList.add("copied");
+      button.dataset.tooltip = "copied";
+      button.textContent = "✓";
+      setTimeout(() => {
+        button.classList.remove("copied");
+        button.dataset.tooltip = "copy";
+        button.textContent = char;
+      }, 900);
+      return;
+    }
+
+    const input = document.getElementById("answerInput");
+    input.focus();
+    document.execCommand("insertText", false, char);
+    button.dataset.tooltip = "inserted";
+    button.textContent = "+";
+    setTimeout(() => {
+      button.dataset.tooltip = "copy";
+      button.textContent = char;
+    }, 900);
+  }
 }
 
 function goNext() {
@@ -774,11 +875,23 @@ document.getElementById("answerForm").addEventListener("submit", (event) => {
   const result = checkAnswer(answer, exercise);
   const justMastered = applyResult(result, active);
   render();
-  renderFeedback(result, active);
+  renderFeedback(result, active, exercise);
   if (justMastered) triggerCelebration();
 });
 
 document.getElementById("nextBtn").addEventListener("click", goNext);
+
+document.querySelectorAll("[data-copy-char]").forEach((button) => {
+  button.addEventListener("click", () => {
+    copyCharacter(button.dataset.copyChar, button);
+  });
+});
+
+document.getElementById("feedback").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-speak]");
+  if (!button) return;
+  speakSwedish(decodeURIComponent(button.dataset.speak));
+});
 
 document.getElementById("resetBtn").addEventListener("click", () => {
   if (!confirm("Fortschritt wirklich zurücksetzen?")) return;
@@ -788,5 +901,10 @@ document.getElementById("resetBtn").addEventListener("click", () => {
   document.getElementById("feedback").classList.add("hidden");
   render();
 });
+
+refreshVoices();
+if ("speechSynthesis" in window) {
+  window.speechSynthesis.onvoiceschanged = refreshVoices;
+}
 
 render();

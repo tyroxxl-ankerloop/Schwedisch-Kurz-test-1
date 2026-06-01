@@ -164,7 +164,16 @@ h1 {
   text-transform: uppercase;
 }
 
-.reset-button {
+.header-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.reset-button,
+.char-button {
   width: auto;
   height: 40px;
   padding: 0 12px;
@@ -174,6 +183,44 @@ h1 {
   color: var(--ink);
   font-size: 13px;
   cursor: pointer;
+}
+
+.char-button {
+  position: relative;
+  min-width: 42px;
+  padding: 0 10px;
+  font-size: 20px;
+  font-weight: 850;
+}
+
+.char-button::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%) translateY(4px);
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: var(--ink);
+  color: white;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.14s ease, transform 0.14s ease;
+  white-space: nowrap;
+}
+
+.char-button:hover::after,
+.char-button:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.char-button.copied {
+  border-color: var(--accent);
+  background: var(--soft);
 }
 
 .task-panel,
@@ -286,6 +333,41 @@ button.secondary {
 .feedback-item strong {
   display: block;
   margin-bottom: 4px;
+}
+
+.audio-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.audio-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid rgb(31 122 102 / 0.22);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 0.58);
+}
+
+.audio-row span {
+  line-height: 1.35;
+}
+
+.speak-button {
+  min-width: 42px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--accent);
+  background: white;
+  color: var(--accent);
+  font-size: 16px;
+}
+
+.speak-button:hover {
+  background: var(--soft);
 }
 
 .coach {
