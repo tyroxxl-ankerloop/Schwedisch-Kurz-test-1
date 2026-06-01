@@ -583,6 +583,7 @@ const winMessages = [
 
 let speechVoices = [];
 let voiceIndex = 0;
+let lastHoverCopy = { char: "", time: 0 };
 
 const defaultState = {
   activeModule: "intro",
@@ -884,6 +885,17 @@ document.getElementById("nextBtn").addEventListener("click", goNext);
 document.querySelectorAll("[data-copy-char]").forEach((button) => {
   button.addEventListener("click", () => {
     copyCharacter(button.dataset.copyChar, button);
+  });
+  button.addEventListener("mouseenter", () => {
+    const now = Date.now();
+    const char = button.dataset.copyChar;
+    if (lastHoverCopy.char === char && now - lastHoverCopy.time < 1200) return;
+    lastHoverCopy = { char, time: now };
+    button.classList.add("hover-copy");
+    copyCharacter(char, button);
+  });
+  button.addEventListener("mouseleave", () => {
+    button.classList.remove("hover-copy");
   });
 });
 
