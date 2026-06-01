@@ -277,6 +277,66 @@ h1 {
   padding: 18px;
 }
 
+.vocab-form {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+
+.vocab-card {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfa;
+}
+
+.vocab-word {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.vocab-word strong {
+  font-size: 22px;
+}
+
+.vocab-word span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.choice-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+}
+
+.choice-option input {
+  accent-color: var(--accent);
+}
+
+.vocab-hint {
+  color: var(--muted);
+  font-size: 13px;
+}
+
 label {
   font-weight: 700;
 }

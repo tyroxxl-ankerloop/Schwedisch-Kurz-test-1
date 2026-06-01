@@ -500,6 +500,116 @@ const secondPass = {
   }
 };
 
+const vocabByModule = {
+  start: [
+    { sv: "Hej", de: "Hallo", hint: "Klingt fast wie ein lockeres 'Hey'." },
+    { sv: "Tack", de: "Danke", hint: "Tack klingt kurz und trocken: Danke, fertig." },
+    { sv: "Ursäkta", de: "Entschuldigung", hint: "Denk an 'sorry, ich säge kurz rein': ur-säkta." },
+    { sv: "Hej då", de: "Auf Wiedersehen", hint: "Hej rein, hej då raus." },
+    { sv: "God morgon", de: "Guten Morgen", hint: "God = gut, morgon = Morgen." },
+    { sv: "Varsågod", de: "Bitte / gern geschehen", hint: "Das höfliche Zauberwort nach tack." }
+  ],
+  intro: [
+    { sv: "jag", de: "ich", hint: "Nicht 'ja'. Jag ist die Person, ja ist die Antwort." },
+    { sv: "heter", de: "heiße", hint: "Jag heter = ich heiße." },
+    { sv: "kommer från", de: "komme aus", hint: "Från klingt wie 'from'." },
+    { sv: "bor", de: "wohne", hint: "Bor = wohnt dort, wo sein Bett steht." },
+    { sv: "Schweiz", de: "Schweiz", hint: "Das Wort bleibt fast geschenkt." },
+    { sv: "Sverige", de: "Schweden", hint: "Sverige ist das Land, svenska die Sprache." }
+  ],
+  questions: [
+    { sv: "vad", de: "was", hint: "Vad fragt nach was." },
+    { sv: "var", de: "wo", hint: "Var fragt nach Ort." },
+    { sv: "varifrån", de: "woher", hint: "Var + från = wo + von." },
+    { sv: "vilka", de: "welche", hint: "Vilka språk = welche Sprachen." },
+    { sv: "hur", de: "wie", hint: "Hur mår du = wie geht es dir." },
+    { sv: "du", de: "du", hint: "Sehr fair: du bleibt du." }
+  ],
+  pronouns: [
+    { sv: "är", de: "bin/bist/ist/sind", hint: "Ein Wort für viele Formen. Luxus für Anfänger." },
+    { sv: "han", de: "er", hint: "Han = er." },
+    { sv: "hon", de: "sie", hint: "Hon = sie." },
+    { sv: "vi", de: "wir", hint: "Vi klingt wie we." },
+    { sv: "ni", de: "ihr/Sie", hint: "Ni ist ihr oder höfliches Sie." },
+    { sv: "trött", de: "müde", hint: "Trött sieht schon müde aus." }
+  ],
+  numbers: [
+    { sv: "ett", de: "eins/ein", hint: "Ett ist Zahl und Artikel." },
+    { sv: "två", de: "zwei", hint: "Das å sieht aus wie eine kleine Zwei mit Hut. Fast." },
+    { sv: "år", de: "Jahr", hint: "År ist kurz, weil Jahre zu schnell vergehen." },
+    { sv: "kostar", de: "kostet", hint: "Kostar klingt nach Kosten." },
+    { sv: "kronor", de: "Kronen", hint: "Krone auf dem Kopf, kronor im Portemonnaie." },
+    { sv: "telefonnummer", de: "Telefonnummer", hint: "Das Wort ist fast schon Deutsch mit Akzent." }
+  ],
+  alphabet: [
+    { sv: "stavas", de: "wird geschrieben/buchstabiert", hint: "Hur stavas det = wie schreibt man das." },
+    { sv: "e-post", de: "E-Mail", hint: "Elektronische Post, sehr brav." },
+    { sv: "upprepa", de: "wiederholen", hint: "Repetieren steckt gedanklich drin." },
+    { sv: "förstår", de: "verstehe", hint: "Jag förstår inte = ich verstehe nicht." },
+    { sv: "långsamt", de: "langsam", hint: "Lång = lang, also langsam ziehen." },
+    { sv: "säger", de: "sagt", hint: "Hur säger man = wie sagt man." }
+  ],
+  languages: [
+    { sv: "svenska", de: "Schwedisch", hint: "Svenska ist die Sprache." },
+    { sv: "tyska", de: "Deutsch", hint: "Tyska = deutsch, nicht Toskana." },
+    { sv: "engelska", de: "Englisch", hint: "Engelska klingt nach English." },
+    { sv: "talar", de: "spreche/spricht", hint: "Ohne kan/vill: talar." },
+    { sv: "tala", de: "sprechen", hint: "Nach kan/vill: tala." },
+    { sv: "lär mig", de: "lerne", hint: "Jag lär mig = ich lerne mir." }
+  ],
+  family: [
+    { sv: "familj", de: "Familie", hint: "Fast wie Familie, nur kürzer." },
+    { sv: "mamma", de: "Mutter", hint: "Mamma ist angenehm einfach." },
+    { sv: "pappa", de: "Vater", hint: "Pappa auch. Geschenk vom Sprachgott." },
+    { sv: "syster", de: "Schwester", hint: "Syster sieht aus wie sister." },
+    { sv: "bror", de: "Bruder", hint: "Bror ist kurz wie Bro." },
+    { sv: "barn", de: "Kind/Kinder", hint: "Barn bleibt im Singular und Plural gleich." },
+    { sv: "ingen", de: "kein/keine", hint: "Ingen bei Singular." },
+    { sv: "inga", de: "keine", hint: "Inga bei Plural." }
+  ],
+  possessive: [
+    { sv: "min", de: "mein/meine", hint: "Min bei en-Wörtern." },
+    { sv: "mitt", de: "mein/meine", hint: "Mitt bei ett-Wörtern." },
+    { sv: "mina", de: "meine", hint: "Mina bei Plural." },
+    { sv: "din", de: "dein/deine", hint: "Din bei en-Wörtern." },
+    { sv: "här", de: "hier", hint: "Här klingt fast wie here." },
+    { sv: "vänner", de: "Freunde", hint: "Vänner sind die, die deine Fehler trotzdem hören." }
+  ],
+  work: [
+    { sv: "arbetar", de: "arbeite/arbeitet", hint: "Arbetar = arbeiten, nah an Arbeit." },
+    { sv: "med", de: "mit", hint: "Nicht mit. Schwedisch: med." },
+    { sv: "transport", de: "Transport", hint: "Geschenktes Wort." },
+    { sv: "logistik", de: "Logistik", hint: "Noch ein Geschenk." },
+    { sv: "företag", de: "Unternehmen", hint: "Företag ist das Ding, das Geld will." },
+    { sv: "var", de: "wo", hint: "Var arbetar du = wo arbeitest du." }
+  ],
+  articles: [
+    { sv: "en", de: "ein/eine", hint: "En-Wörter: en bil." },
+    { sv: "ett", de: "ein/eine", hint: "Ett-Wörter: ett hus." },
+    { sv: "bil", de: "Auto", hint: "Bil = Auto, nicht Bill." },
+    { sv: "bilen", de: "das Auto", hint: "Hinten -en macht es bestimmt." },
+    { sv: "hus", de: "Haus", hint: "Hus = Haus, fast ohne Aufwand." },
+    { sv: "huset", de: "das Haus", hint: "Hinten -et bei ett-Wörtern." }
+  ],
+  day: [
+    { sv: "äter", de: "esse/isst", hint: "Äter frukost = Frühstück essen." },
+    { sv: "dricker", de: "trinke/trinkt", hint: "Dricker klingt wie trinken." },
+    { sv: "jobbar", de: "arbeite/jobbe", hint: "Jobbar ist das Alltagswort." },
+    { sv: "läser", de: "lese/lerne", hint: "Läser svenska = Schwedisch lernen/lesen." },
+    { sv: "sover", de: "schlafe/schläft", hint: "Sover klingt weich, wie Schlaf." },
+    { sv: "går", de: "gehe/geht", hint: "Går ist gehen." }
+  ]
+};
+
+const fallbackVocab = [
+  { sv: "inte", de: "nicht", hint: "Inte steht nach dem ersten Verb." },
+  { sv: "kan", de: "kann", hint: "Nach kan kommt die Grundform." },
+  { sv: "vill", de: "will/möchte", hint: "Nach vill kommt die Grundform." },
+  { sv: "jag", de: "ich", hint: "Jag, nicht ja." },
+  { sv: "du", de: "du", hint: "Du bleibt du." },
+  { sv: "svenska", de: "Schwedisch", hint: "Die Sprache." }
+];
+
 const rules = [
   { pattern: /\bja\s+(heter|kommer|bor|talar|kan|vill|har|arbetar|jobbar|äter|dricker|läser|lär)\b/i, label: "ja/jag", fix: "Schreibe jag für ich. Ja bedeutet nur ja.", example: "Jag heter Jay." },
   { pattern: /\bjag am\b|\bjag ist\b|\bjag bin\b/i, label: "är", fix: "Sein heißt auf Schwedisch är.", example: "Jag är Jay." },
@@ -591,13 +701,17 @@ const defaultState = {
   today: 0,
   totalErrors: 0,
   modules: Object.fromEntries(
-    modules.map((module) => [module.id, { correctStreak: 0, status: "unsicher", attempts: 0, variantIndex: 0, lastPassedVariant: null }])
+    modules.map((module) => [
+      module.id,
+      { correctStreak: 0, vocabStreak: 0, status: "unsicher", attempts: 0, variantIndex: 0, vocabVariant: 0, lastPassedVariant: null }
+    ])
   ),
   errors: {}
 };
 
 let state = loadState();
 let lastCheckedPassed = null;
+let lastCheckedMode = null;
 
 function loadState() {
   const saved = localStorage.getItem("svenska-a1-state");
@@ -699,9 +813,13 @@ function getActiveModule() {
 }
 
 function getModuleState(module) {
-  const fallback = { correctStreak: 0, status: "unsicher", attempts: 0, variantIndex: 0, lastPassedVariant: null };
+  const fallback = { correctStreak: 0, vocabStreak: 0, status: "unsicher", attempts: 0, variantIndex: 0, vocabVariant: 0, lastPassedVariant: null };
   state.modules[module.id] = { ...fallback, ...(state.modules[module.id] || {}) };
   return state.modules[module.id];
+}
+
+function isVocabMode(module) {
+  return getModuleState(module).vocabStreak < 2;
 }
 
 function getExerciseVariants(module) {
@@ -712,6 +830,23 @@ function getExercise(module) {
   const moduleState = getModuleState(module);
   const variants = getExerciseVariants(module);
   return variants[moduleState.variantIndex % variants.length];
+}
+
+function getVocabItems(module) {
+  return vocabByModule[module.id] || fallbackVocab;
+}
+
+function getVocabRound(module) {
+  const moduleState = getModuleState(module);
+  const words = getVocabItems(module);
+  const start = ((moduleState.vocabStreak * 4 + moduleState.vocabVariant * 2) % words.length + words.length) % words.length;
+  return Array.from({ length: Math.min(4, words.length) }, (_, index) => words[(start + index) % words.length]);
+}
+
+function getVocabChoices(correct, module) {
+  const all = [...getVocabItems(module), ...fallbackVocab].filter((item) => item.de !== correct.de);
+  const wrong = all.slice(0, 3).map((item) => item.de);
+  return [correct.de, ...wrong].sort((a, b) => a.localeCompare(b, "de"));
 }
 
 function advanceExerciseVariant(module) {
@@ -730,18 +865,59 @@ function render() {
   const active = getActiveModule();
   const exercise = getExercise(active);
   const moduleState = getModuleState(active);
+  const vocabMode = isVocabMode(active);
   document.getElementById("moduleTag").textContent = active.tag;
   document.getElementById("moduleTitle").textContent = active.title;
-  document.getElementById("topicStatus").textContent = moduleState.status;
-  document.getElementById("todayCount").textContent = state.today;
-  document.getElementById("masteredCount").textContent = Object.values(state.modules).filter((item) => item.status === "verstanden").length;
-  document.getElementById("errorCount").textContent = state.totalErrors;
-  document.getElementById("taskTitle").textContent =
-    moduleState.correctStreak === 1 ? "Runde 2: anderes Muster, gleicher Bereich." : "Runde 1: schreibe maximal 4-6 kurze Sätze.";
-  document.getElementById("taskList").innerHTML = exercise.tasks.map((task) => `<li>${task}</li>`).join("");
+  document.getElementById("topicStatus").textContent = vocabMode ? `Voci ${moduleState.vocabStreak}/2` : moduleState.status;
+  renderStats();
+  document.getElementById("difficulty").textContent = vocabMode ? "Voci" : "A1";
+
+  if (vocabMode) {
+    document.getElementById("taskTitle").textContent = `Voci vor "${active.title}"`;
+    document.getElementById("taskList").innerHTML = "<li>Wähle die richtige deutsche Bedeutung.</li><li>Du brauchst zwei fehlerfreie Voci-Runden, bevor die Satzübung freigeschaltet wird.</li>";
+    document.getElementById("answerForm").classList.add("hidden");
+    document.getElementById("vocabForm").classList.remove("hidden");
+    renderVocabForm(active);
+  } else {
+    document.getElementById("taskTitle").textContent =
+      moduleState.correctStreak === 1 ? "Runde 2: anderes Muster, gleicher Bereich." : "Runde 1: schreibe maximal 4-6 kurze Sätze.";
+    document.getElementById("taskList").innerHTML = exercise.tasks.map((task) => `<li>${task}</li>`).join("");
+    document.getElementById("vocabForm").classList.add("hidden");
+    document.getElementById("answerForm").classList.remove("hidden");
+  }
+
   renderModules();
   renderErrorFocus();
   renderFlowButton();
+}
+
+function renderStats() {
+  document.getElementById("todayCount").textContent = state.today;
+  document.getElementById("masteredCount").textContent = Object.values(state.modules).filter((item) => item.status === "verstanden").length;
+  document.getElementById("errorCount").textContent = state.totalErrors;
+}
+
+function renderVocabForm(module) {
+  const items = getVocabRound(module);
+  document.getElementById("vocabForm").innerHTML = `${items
+    .map(
+      (item, index) => `<div class="vocab-card">
+        <div class="vocab-word"><strong>${item.sv}</strong><span>Wort ${index + 1}</span></div>
+        <div class="choice-grid">
+          ${getVocabChoices(item, module)
+            .map(
+              (choice) => `<label class="choice-option">
+                <input type="radio" name="vocab-${index}" value="${choice}" />
+                <span>${choice}</span>
+              </label>`
+            )
+            .join("")}
+        </div>
+        <div class="vocab-hint">Eselsbrücke: ${item.hint}</div>
+      </div>`
+    )
+    .join("")}
+    <div class="actions"><button type="submit">Voci prüfen</button></div>`;
 }
 
 function renderModules() {
@@ -752,7 +928,7 @@ function renderModules() {
       const mastered = item.status === "verstanden" ? " mastered" : "";
       return `<button class="module-button${active}${mastered}" data-module="${module.id}" type="button">
         ${module.title}
-        <span>${item.status} · Serie ${item.correctStreak}/2</span>
+        <span>Voci ${item.vocabStreak}/2 · Übung ${item.correctStreak}/2 · ${item.status}</span>
       </button>`;
     })
     .join("");
@@ -778,6 +954,19 @@ function checkAnswer(answer, active) {
   return { passed, expectedHits, foundRules, missing };
 }
 
+function checkVocab(module) {
+  const items = getVocabRound(module);
+  const form = document.getElementById("vocabForm");
+  const mistakes = [];
+  items.forEach((item, index) => {
+    const selected = form.querySelector(`input[name="vocab-${index}"]:checked`);
+    if (!selected || selected.value !== item.de) {
+      mistakes.push({ ...item, selected: selected?.value || "keine Antwort" });
+    }
+  });
+  return { passed: mistakes.length === 0, mistakes, items };
+}
+
 function applyResult(result, active) {
   const moduleState = getModuleState(active);
   const wasMastered = moduleState.status === "verstanden";
@@ -798,6 +987,22 @@ function applyResult(result, active) {
 
   saveState();
   return !wasMastered && moduleState.status === "verstanden";
+}
+
+function applyVocabResult(result, active) {
+  const moduleState = getModuleState(active);
+  moduleState.attempts += 1;
+  state.today += 1;
+  if (result.passed) {
+    moduleState.vocabStreak += 1;
+    if (moduleState.vocabStreak >= 2 && moduleState.status === "unsicher") {
+      moduleState.status = "Voci bestanden";
+    }
+  } else {
+    state.totalErrors += Math.max(1, result.mistakes.length);
+    state.errors.Voci = (state.errors.Voci || 0) + result.mistakes.length;
+  }
+  saveState();
 }
 
 function renderFeedback(result, active, exercise) {
@@ -831,6 +1036,22 @@ function renderFeedback(result, active, exercise) {
   }
 
   feedback.innerHTML = `<h3>Korrektur</h3>${items.join("")}`;
+  feedback.classList.remove("hidden");
+}
+
+function renderVocabFeedback(result, active) {
+  const moduleState = getModuleState(active);
+  const feedback = document.getElementById("feedback");
+  const items = [];
+  if (result.passed) {
+    items.push(`<div class="feedback-item ok"><strong>Voci sitzt.</strong>Fehlerfrei. Voci-Serie: ${moduleState.vocabStreak}/2.</div>`);
+  } else {
+    items.push(`<div class="feedback-item warn"><strong>Voci verkackt.</strong>Bevor du Sätze baust, müssen diese Wörter sitzen. Sonst wird das grammatikalisch ein Küchenbrand.</div>`);
+    result.mistakes.forEach((item) => {
+      items.push(`<div class="feedback-item bad"><strong>${item.sv}</strong>Deine Wahl: ${item.selected}<br>Korrekt: <em>${item.de}</em><br>Eselsbrücke: ${item.hint}</div>`);
+    });
+  }
+  feedback.innerHTML = `<h3>Voci-Korrektur</h3>${items.join("")}`;
   feedback.classList.remove("hidden");
 }
 
@@ -935,7 +1156,11 @@ function goNext() {
   const current = getActiveModule();
   const currentState = getModuleState(current);
 
-  if (lastCheckedPassed === false) {
+  if (lastCheckedMode === "vocab") {
+    if (lastCheckedPassed === false || currentState.vocabStreak < 2) {
+      currentState.vocabVariant += 1;
+    }
+  } else if (lastCheckedPassed === false) {
     advanceExerciseVariant(current);
   } else if (currentState.correctStreak >= 2) {
     state.activeModule = modules[(currentIndex + 1) % modules.length].id;
@@ -943,11 +1168,12 @@ function goNext() {
     advanceExerciseVariant(current);
   }
 
-  if (lastCheckedPassed === false || currentState.correctStreak < 2) {
+  if (lastCheckedMode === "vocab" || lastCheckedPassed === false || currentState.correctStreak < 2) {
     saveState();
     document.getElementById("answerInput").value = "";
     document.getElementById("feedback").classList.add("hidden");
     lastCheckedPassed = null;
+    lastCheckedMode = null;
     render();
     return;
   }
@@ -956,6 +1182,7 @@ function goNext() {
   document.getElementById("answerInput").value = "";
   document.getElementById("feedback").classList.add("hidden");
   lastCheckedPassed = null;
+  lastCheckedMode = null;
   render();
 }
 
@@ -964,9 +1191,24 @@ document.getElementById("moduleList").addEventListener("click", (event) => {
   if (!button) return;
   state.activeModule = button.dataset.module;
   lastCheckedPassed = null;
+  lastCheckedMode = null;
   saveState();
   document.getElementById("feedback").classList.add("hidden");
   render();
+});
+
+document.getElementById("vocabForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const active = getActiveModule();
+  const result = checkVocab(active);
+  applyVocabResult(result, active);
+  lastCheckedPassed = result.passed;
+  lastCheckedMode = "vocab";
+  renderStats();
+  renderModules();
+  renderErrorFocus();
+  renderFlowButton();
+  renderVocabFeedback(result, active);
 });
 
 document.getElementById("answerForm").addEventListener("submit", (event) => {
@@ -978,7 +1220,11 @@ document.getElementById("answerForm").addEventListener("submit", (event) => {
   const result = checkAnswer(answer, exercise);
   const justMastered = applyResult(result, active);
   lastCheckedPassed = result.passed;
-  render();
+  lastCheckedMode = "exercise";
+  renderStats();
+  renderModules();
+  renderErrorFocus();
+  renderFlowButton();
   renderFeedback(result, active, exercise);
   if (justMastered) triggerCelebration();
 });
@@ -1020,6 +1266,7 @@ document.getElementById("resetBtn").addEventListener("click", () => {
   localStorage.removeItem("svenska-a1-state");
   state = loadState();
   lastCheckedPassed = null;
+  lastCheckedMode = null;
   document.getElementById("answerInput").value = "";
   document.getElementById("feedback").classList.add("hidden");
   render();
