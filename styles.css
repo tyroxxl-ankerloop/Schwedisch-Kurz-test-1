@@ -447,9 +447,9 @@ button.secondary {
 .celebration {
   position: fixed;
   top: 18%;
-  left: -340px;
-  width: 340px;
-  height: 190px;
+  left: -420px;
+  width: 420px;
+  height: 230px;
   pointer-events: none;
   opacity: 0;
   z-index: 20;
@@ -465,7 +465,7 @@ button.secondary {
   top: 12px;
   font-size: 124px;
   filter: drop-shadow(0 10px 16px rgb(0 0 0 / 0.22));
-  transform: rotate(6deg);
+  transform: scaleX(-1) rotate(6deg);
 }
 
 .rainbow-trail {
@@ -478,6 +478,35 @@ button.secondary {
   background: linear-gradient(90deg, #ff2d55, #ffcc00, #32d74b, #0a84ff, #bf5af2);
   opacity: 0.9;
   filter: blur(0.4px);
+}
+
+.wow-word {
+  position: absolute;
+  color: #ff2d55;
+  font-size: 28px;
+  font-weight: 900;
+  text-shadow: 0 3px 0 white, 0 8px 18px rgb(0 0 0 / 0.14);
+  animation: word-pop 0.55s ease-in-out infinite alternate;
+}
+
+.wow-a {
+  left: 18px;
+  top: 22px;
+  color: #ff2d55;
+}
+
+.wow-b {
+  left: 132px;
+  top: 0;
+  color: #0a84ff;
+  animation-delay: 0.14s;
+}
+
+.wow-c {
+  left: 70px;
+  top: 150px;
+  color: #bf5af2;
+  animation-delay: 0.25s;
 }
 
 .rainbow-trail::after {
@@ -552,6 +581,15 @@ button.secondary {
   }
 }
 
+@keyframes word-pop {
+  from {
+    transform: rotate(-8deg) scale(0.92);
+  }
+  to {
+    transform: rotate(5deg) scale(1.08);
+  }
+}
+
 @media (max-width: 1050px) {
   .app-shell {
     grid-template-columns: 260px 1fr;
@@ -567,6 +605,18 @@ button.secondary {
 @media (max-width: 760px) {
   .app-shell {
     grid-template-columns: 1fr;
+  }
+
+  .trainer {
+    order: 1;
+  }
+
+  .sidebar {
+    order: 2;
+  }
+
+  .coach {
+    order: 3;
   }
 
   .sidebar,

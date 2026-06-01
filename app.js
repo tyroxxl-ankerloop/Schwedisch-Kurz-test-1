@@ -590,11 +590,14 @@ const defaultState = {
   activeModule: "intro",
   today: 0,
   totalErrors: 0,
-  modules: Object.fromEntries(modules.map((module) => [module.id, { correctStreak: 0, status: "unsicher", attempts: 0 }])),
+  modules: Object.fromEntries(
+    modules.map((module) => [module.id, { correctStreak: 0, status: "unsicher", attempts: 0, variantIndex: 0, lastPassedVariant: null }])
+  ),
   errors: {}
 };
 
 let state = loadState();
+let lastCheckedPassed = null;
 
 function loadState() {
   const saved = localStorage.getItem("svenska-a1-state");
@@ -695,18 +698,38 @@ function getActiveModule() {
   return modules.find((module) => module.id === state.activeModule) || modules[0];
 }
 
+function getModuleState(module) {
+  const fallback = { correctStreak: 0, status: "unsicher", attempts: 0, variantIndex: 0, lastPassedVariant: null };
+  state.modules[module.id] = { ...fallback, ...(state.modules[module.id] || {}) };
+  return state.modules[module.id];
+}
+
+function getExerciseVariants(module) {
+  return [module, ...(secondPass[module.id] ? [secondPass[module.id]] : [])];
+}
+
 function getExercise(module) {
-  const moduleState = state.modules[module.id] || { correctStreak: 0 };
-  if (moduleState.correctStreak === 1 && secondPass[module.id]) {
-    return secondPass[module.id];
+  const moduleState = getModuleState(module);
+  const variants = getExerciseVariants(module);
+  return variants[moduleState.variantIndex % variants.length];
+}
+
+function advanceExerciseVariant(module) {
+  const moduleState = getModuleState(module);
+  const variants = getExerciseVariants(module);
+  if (variants.length < 2) return;
+  const current = moduleState.variantIndex % variants.length;
+  let next = (current + 1) % variants.length;
+  if (moduleState.correctStreak === 1 && next === moduleState.lastPassedVariant) {
+    next = (next + 1) % variants.length;
   }
-  return module;
+  moduleState.variantIndex = next;
 }
 
 function render() {
   const active = getActiveModule();
   const exercise = getExercise(active);
-  const moduleState = state.modules[active.id];
+  const moduleState = getModuleState(active);
   document.getElementById("moduleTag").textContent = active.tag;
   document.getElementById("moduleTitle").textContent = active.title;
   document.getElementById("topicStatus").textContent = moduleState.status;
@@ -718,12 +741,13 @@ function render() {
   document.getElementById("taskList").innerHTML = exercise.tasks.map((task) => `<li>${task}</li>`).join("");
   renderModules();
   renderErrorFocus();
+  renderFlowButton();
 }
 
 function renderModules() {
   document.getElementById("moduleList").innerHTML = modules
     .map((module) => {
-      const item = state.modules[module.id];
+      const item = getModuleState(module);
       const active = module.id === state.activeModule ? " active" : "";
       const mastered = item.status === "verstanden" ? " mastered" : "";
       return `<button class="module-button${active}${mastered}" data-module="${module.id}" type="button">
@@ -755,17 +779,17 @@ function checkAnswer(answer, active) {
 }
 
 function applyResult(result, active) {
-  const moduleState = state.modules[active.id];
+  const moduleState = getModuleState(active);
   const wasMastered = moduleState.status === "verstanden";
   moduleState.attempts += 1;
   state.today += 1;
 
   if (result.passed) {
+    moduleState.lastPassedVariant = moduleState.variantIndex;
     moduleState.correctStreak += 1;
     moduleState.status = moduleState.correctStreak >= 2 ? "verstanden" : "fast sicher";
   } else {
-    moduleState.correctStreak = 0;
-    moduleState.status = "unsicher";
+    moduleState.status = moduleState.correctStreak === 1 ? "fast sicher" : "unsicher";
     state.totalErrors += Math.max(1, result.foundRules.length);
     result.foundRules.forEach((rule) => {
       state.errors[rule.label] = (state.errors[rule.label] || 0) + 1;
@@ -779,7 +803,7 @@ function applyResult(result, active) {
 function renderFeedback(result, active, exercise) {
   const feedback = document.getElementById("feedback");
   const nextModule = modules[(modules.findIndex((module) => module.id === active.id) + 1) % modules.length];
-  const moduleState = state.modules[active.id];
+  const moduleState = getModuleState(active);
   const items = [];
   const roast = roastMessages[Math.floor(Math.random() * roastMessages.length)];
   const win = winMessages[Math.floor(Math.random() * winMessages.length)];
@@ -810,12 +834,44 @@ function renderFeedback(result, active, exercise) {
   feedback.classList.remove("hidden");
 }
 
+function renderFlowButton() {
+  const button = document.getElementById("nextBtn");
+  if (!button) return;
+  if (lastCheckedPassed === null) {
+    button.classList.add("hidden");
+    return;
+  }
+  button.classList.remove("hidden");
+  button.textContent = lastCheckedPassed ? "WEITER" : "NOCHMALS VERSUCHEN";
+}
+
 function triggerCelebration() {
   const celebration = document.getElementById("celebration");
   if (!celebration) return;
   celebration.classList.remove("fly");
   void celebration.offsetWidth;
   celebration.classList.add("fly");
+  playGlitterSound();
+}
+
+function playGlitterSound() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return;
+  const context = new AudioContextClass();
+  const notes = [880, 1174.66, 1567.98];
+  notes.forEach((frequency, index) => {
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.type = "sine";
+    oscillator.frequency.value = frequency;
+    gain.gain.setValueAtTime(0.0001, context.currentTime + index * 0.08);
+    gain.gain.exponentialRampToValueAtTime(0.026, context.currentTime + index * 0.08 + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + index * 0.08 + 0.32);
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start(context.currentTime + index * 0.08);
+    oscillator.stop(context.currentTime + index * 0.08 + 0.34);
+  });
 }
 
 async function copyCharacter(char, button) {
@@ -877,21 +933,29 @@ async function copyCharacter(char, button) {
 function goNext() {
   const currentIndex = modules.findIndex((module) => module.id === state.activeModule);
   const current = getActiveModule();
-  const currentState = state.modules[current.id];
+  const currentState = getModuleState(current);
 
-  if (currentState.correctStreak >= 2) {
+  if (lastCheckedPassed === false) {
+    advanceExerciseVariant(current);
+  } else if (currentState.correctStreak >= 2) {
     state.activeModule = modules[(currentIndex + 1) % modules.length].id;
   } else {
-    const weak = Object.entries(state.errors).sort((a, b) => b[1] - a[1])[0];
-    if (weak) {
-      const target = modules.find((module) => module.tag.toLowerCase().includes(weak[0].toLowerCase())) || modules[currentIndex];
-      state.activeModule = target.id;
-    }
+    advanceExerciseVariant(current);
+  }
+
+  if (lastCheckedPassed === false || currentState.correctStreak < 2) {
+    saveState();
+    document.getElementById("answerInput").value = "";
+    document.getElementById("feedback").classList.add("hidden");
+    lastCheckedPassed = null;
+    render();
+    return;
   }
 
   saveState();
   document.getElementById("answerInput").value = "";
   document.getElementById("feedback").classList.add("hidden");
+  lastCheckedPassed = null;
   render();
 }
 
@@ -899,6 +963,7 @@ document.getElementById("moduleList").addEventListener("click", (event) => {
   const button = event.target.closest("[data-module]");
   if (!button) return;
   state.activeModule = button.dataset.module;
+  lastCheckedPassed = null;
   saveState();
   document.getElementById("feedback").classList.add("hidden");
   render();
@@ -912,6 +977,7 @@ document.getElementById("answerForm").addEventListener("submit", (event) => {
   const exercise = getExercise(active);
   const result = checkAnswer(answer, exercise);
   const justMastered = applyResult(result, active);
+  lastCheckedPassed = result.passed;
   render();
   renderFeedback(result, active, exercise);
   if (justMastered) triggerCelebration();
@@ -953,6 +1019,7 @@ document.getElementById("resetBtn").addEventListener("click", () => {
   if (!confirm("Fortschritt wirklich zurücksetzen?")) return;
   localStorage.removeItem("svenska-a1-state");
   state = loadState();
+  lastCheckedPassed = null;
   document.getElementById("answerInput").value = "";
   document.getElementById("feedback").classList.add("hidden");
   render();
