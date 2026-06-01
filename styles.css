@@ -300,6 +300,114 @@ button.secondary {
   display: none;
 }
 
+.celebration {
+  position: fixed;
+  top: 18%;
+  left: -220px;
+  width: 220px;
+  height: 120px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 20;
+}
+
+.celebration.fly {
+  animation: fly-across 2.8s ease-in-out forwards;
+}
+
+.unicorn {
+  position: absolute;
+  right: 0;
+  top: 12px;
+  font-size: 72px;
+  filter: drop-shadow(0 10px 16px rgb(0 0 0 / 0.22));
+  transform: rotate(6deg);
+}
+
+.rainbow-trail {
+  position: absolute;
+  left: 0;
+  top: 46px;
+  width: 170px;
+  height: 34px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff2d55, #ffcc00, #32d74b, #0a84ff, #bf5af2);
+  opacity: 0.9;
+  filter: blur(0.4px);
+}
+
+.rainbow-trail::after {
+  content: "";
+  position: absolute;
+  inset: 7px 0;
+  background: rgb(255 255 255 / 0.42);
+  border-radius: inherit;
+}
+
+.glitter {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    20px -10px #ffcc00,
+    42px 12px #ff2d55,
+    68px -4px #32d74b,
+    96px 18px #0a84ff,
+    122px -12px #bf5af2;
+  animation: glitter-pop 0.6s ease-in-out infinite alternate;
+}
+
+.glitter-a {
+  left: 14px;
+  top: 26px;
+}
+
+.glitter-b {
+  left: 28px;
+  top: 78px;
+  animation-delay: 0.16s;
+}
+
+.glitter-c {
+  left: 80px;
+  top: 58px;
+  animation-delay: 0.28s;
+}
+
+@keyframes fly-across {
+  0% {
+    transform: translateX(0) translateY(0) rotate(-3deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(calc(50vw + 80px)) translateY(-30px) rotate(4deg);
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(calc(100vw + 360px)) translateY(18px) rotate(9deg);
+    opacity: 0;
+  }
+}
+
+@keyframes glitter-pop {
+  from {
+    opacity: 0.35;
+    transform: scale(0.75);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+
 @media (max-width: 1050px) {
   .app-shell {
     grid-template-columns: 260px 1fr;

@@ -423,26 +423,28 @@ const rules = [
 ];
 
 const roastMessages = [
-  "Hier hast du sauber verkackt. Nicht schlimm, wir kratzen die Grammatikreste vom Boden und machen weiter.",
-  "Autsch. Dieser Satz ist mit Vollgas gegen die Wand gefahren und hat noch gehupt.",
-  "Das war mutig. Leider auch falsch. Mut ersetzt keine Grammatik, du sprachlicher Kamikaze.",
-  "Fast Schwedisch. So wie ein brennender Einkaufswagen fast ein Volvo ist.",
-  "Der Satz wollte nach Stockholm, ist aber besoffen in Dietikon ausgestiegen.",
-  "Das war eine kleine Sprachkatastrophe mit Ansage. Immerhin brennt nur A1, nicht ganz Schweden.",
-  "Glückwunsch, du hast gerade Grammatik in eine offene Baugrube geschubst. Wir holen sie wieder raus.",
-  "Schwedisch hat diesen Satz gelesen und kurz überlegt, den Notruf zu wählen.",
-  "Hier hat die Grammatik kurz Feuer gefangen. Kein Drama, aber leg bitte das Benzin weg.",
-  "Das war kein Satz, das war ein Unfallbericht mit Umlauten.",
-  "Du hast das Muster gesehen, angelächelt und dann frontal ignoriert. Beeindruckend konsequent falsch.",
-  "Dieser Satz hat A1-Niveau gesucht und unterwegs seine Schuhe verloren.",
-  "Grammatikalisch war das gerade ein Sturz die Treppe runter. Aber hey, unten lernen wir weiter.",
-  "Das war so falsch, dass sogar Google Translate kurz einen Therapeuten gebraucht hätte.",
-  "Du bist nicht gescheitert. Du hast nur sehr kreativ demonstriert, wie man es nicht macht.",
-  "Der Satz lebt noch, aber nur, weil A1 keine Intensivstation hat.",
-  "Hier riecht es nach verbranntem Satzbau. Fenster auf, Regel anschauen, nochmal.",
-  "Das war sprachlich ein Griff ins Klo. Hände waschen, Korrektur lesen, weiter.",
-  "Dein Schwedisch hat gerade versucht zu rennen, ist aber über 'inte' gestolpert und liegen geblieben.",
-  "Wunderschön daneben. Nicht elegant, nicht korrekt, aber wenigstens eindeutig reparierbar."
+  "Hier hast du maximal verkackt. Der Satz liegt rauchend im Straßengraben, aber wir ziehen ihn da wieder raus.",
+  "Autsch. Das war kein Schwedisch, das war ein frontaler Grammatikunfall mit Totalschaden.",
+  "Du hast die Regel gesehen und sie behandelt wie eine rote Ampel um drei Uhr morgens. Dumm gelaufen.",
+  "Dieser Satz ist so kaputt, dass selbst der Papierkorb ihn mit spitzen Fingern anfassen würde.",
+  "Grammatikalisch hast du gerade das Wohnzimmer angezündet und gefragt, ob es hier warm ist.",
+  "Das war sprachlich ein Griff ins Klo. Tief. Mit beiden Händen. Jetzt waschen wir das sauber.",
+  "Dein Satz hat A1 gesehen und ist panisch rückwärts aus dem Fenster gesprungen.",
+  "Schwedisch hat diesen Satz gelesen und direkt eine einstweilige Verfügung beantragt.",
+  "Das war kein Fehler mehr, das war ein Verbrechen gegen einfache Satzstellung.",
+  "Du hast die Grammatik gerade öffentlich hingerichtet. Ohne Prozess. Ohne Würde.",
+  "Dieser Satz ist mit Anlauf gegen die Wand gelaufen und hat danach der Wand die Schuld gegeben.",
+  "Das ist so schief, dass sogar ein kaputter IKEA-Schrank stabiler wirkt.",
+  "Dein Schwedisch hat gerade versucht, cool zu wirken, und ist auf einer Bananenschale aus 'inte' ausgerutscht.",
+  "Hier riecht es nach verbranntem Satzbau und schlechten Entscheidungen.",
+  "Du hast gerade ein kleines sprachliches Massaker angerichtet. Zum Glück ist A1 robust.",
+  "Der Satz ist nicht falsch abgebogen. Der hat das Lenkrad aus dem Fenster geworfen.",
+  "Das war eine grammatikalische Bankrotterklärung mit hübscher Beleuchtung.",
+  "Wunderschön daneben. Wie Dart spielen mit verbundenen Augen und einem Vorschlaghammer.",
+  "Der Satz wollte elegant sein, ist aber mit dem Gesicht zuerst in die Verbtabelle gefallen.",
+  "Das war nicht knapp falsch. Das war falsch mit Ansage, Blaskapelle und brennendem Banner.",
+  "Du hast Schwedisch gerade behandelt wie ein Rätsel, bei dem du die Anleitung gegessen hast.",
+  "Dieser Satz braucht keine Korrektur, der braucht Abrissgenehmigung. Danach bauen wir neu."
 ];
 
 const winMessages = [
@@ -534,6 +536,7 @@ function checkAnswer(answer, active) {
 
 function applyResult(result, active) {
   const moduleState = state.modules[active.id];
+  const wasMastered = moduleState.status === "verstanden";
   moduleState.attempts += 1;
   state.today += 1;
 
@@ -550,6 +553,7 @@ function applyResult(result, active) {
   }
 
   saveState();
+  return !wasMastered && moduleState.status === "verstanden";
 }
 
 function renderFeedback(result, active) {
@@ -583,6 +587,14 @@ function renderFeedback(result, active) {
 
   feedback.innerHTML = `<h3>Korrektur</h3>${items.join("")}`;
   feedback.classList.remove("hidden");
+}
+
+function triggerCelebration() {
+  const celebration = document.getElementById("celebration");
+  if (!celebration) return;
+  celebration.classList.remove("fly");
+  void celebration.offsetWidth;
+  celebration.classList.add("fly");
 }
 
 function goNext() {
@@ -621,9 +633,10 @@ document.getElementById("answerForm").addEventListener("submit", (event) => {
   if (!answer) return;
   const active = getActiveModule();
   const result = checkAnswer(answer, active);
-  applyResult(result, active);
+  const justMastered = applyResult(result, active);
   render();
   renderFeedback(result, active);
+  if (justMastered) triggerCelebration();
 });
 
 document.getElementById("nextBtn").addEventListener("click", goNext);
