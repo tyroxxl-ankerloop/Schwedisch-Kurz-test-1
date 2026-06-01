@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Svenska A1+ Trainer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="Lernmodule">
+        <div class="brand">
+          <span class="brand-mark">Å</span>
+          <div>
+            <h1>Svenska A1+</h1>
+            <p>Langsam. Direkt. Alltagstauglich.</p>
+          </div>
+        </div>
+
+        <div class="progress-card">
+          <div>
+            <span class="label">Heute</span>
+            <strong id="todayCount">0</strong>
+          </div>
+          <div>
+            <span class="label">Sicher</span>
+            <strong id="masteredCount">0</strong>
+          </div>
+          <div>
+            <span class="label">Fehler</span>
+            <strong id="errorCount">0</strong>
+          </div>
+        </div>
+
+        <nav id="moduleList" class="module-list"></nav>
+      </aside>
+
+      <section class="trainer">
+        <header class="trainer-header">
+          <div>
+            <p class="eyebrow" id="moduleTag">Modul</p>
+            <h2 id="moduleTitle">Lade Übungen...</h2>
+          </div>
+          <button id="resetBtn" class="icon-button" title="Fortschritt zurücksetzen" type="button">↺</button>
+        </header>
+
+        <section class="task-panel" aria-live="polite">
+          <div class="task-meta">
+            <span id="difficulty">A1+</span>
+            <span id="topicStatus">unsicher</span>
+          </div>
+          <h3 id="taskTitle">Aufgabe</h3>
+          <ol id="taskList" class="task-list"></ol>
+        </section>
+
+        <form id="answerForm" class="answer-form">
+          <label for="answerInput">Deine Antwort auf Schwedisch</label>
+          <textarea id="answerInput" rows="7" spellcheck="false" placeholder="Schreibe hier 4-6 kurze Sätze..."></textarea>
+          <div class="actions">
+            <button type="submit">Prüfen</button>
+            <button id="nextBtn" class="secondary" type="button">Neue Aufgabe</button>
+          </div>
+        </form>
+
+        <section id="feedback" class="feedback hidden" aria-live="polite"></section>
+      </section>
+
+      <aside class="coach">
+        <section>
+          <h2>Fehlerfokus</h2>
+          <ul id="errorFocus"></ul>
+        </section>
+        <section>
+          <h2>Bereit für danach</h2>
+          <p id="nextHint">Wenn du ein Muster zweimal korrekt anwendest, schaltet der Trainer weiter.</p>
+        </section>
+      </aside>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

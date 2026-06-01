@@ -1,0 +1,329 @@
+:root {
+  color-scheme: light;
+  --ink: #18211f;
+  --muted: #64706c;
+  --line: #d8e0dc;
+  --panel: #ffffff;
+  --bg: #f5f7f4;
+  --accent: #1f7a66;
+  --accent-2: #c44536;
+  --soft: #e9f3ef;
+  --warn: #fff2d8;
+  --ok: #e5f6e8;
+  --bad: #fde7e3;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 300px;
+  min-height: 100vh;
+}
+
+.sidebar,
+.coach {
+  padding: 24px;
+  border-right: 1px solid var(--line);
+  background: #fbfcfa;
+}
+
+.coach {
+  border-right: 0;
+  border-left: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-weight: 800;
+  font-size: 24px;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 2px;
+  font-size: 22px;
+}
+
+.brand p,
+.label,
+.eyebrow,
+.task-meta,
+.coach p {
+  color: var(--muted);
+}
+
+.progress-card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.progress-card div {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+
+.progress-card strong {
+  display: block;
+  font-size: 22px;
+}
+
+.module-list {
+  display: grid;
+  gap: 8px;
+}
+
+.module-button {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.module-button.active {
+  border-color: var(--accent);
+  background: var(--soft);
+}
+
+.module-button span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.trainer {
+  padding: 28px;
+  max-width: 980px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.trainer-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.trainer-header h2 {
+  font-size: 30px;
+  margin-bottom: 0;
+}
+
+.eyebrow {
+  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.task-panel,
+.answer-form,
+.feedback,
+.coach section {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+
+.task-panel {
+  padding: 22px;
+  margin-bottom: 16px;
+}
+
+.task-meta {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.task-meta span {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: var(--soft);
+}
+
+.task-list {
+  padding-left: 22px;
+  margin-bottom: 0;
+}
+
+.task-list li {
+  margin-bottom: 8px;
+}
+
+.answer-form {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+}
+
+label {
+  font-weight: 700;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 160px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  line-height: 1.45;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+button.secondary {
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--ink);
+}
+
+.feedback {
+  margin-top: 16px;
+  padding: 18px;
+}
+
+.feedback h3 {
+  margin-bottom: 10px;
+}
+
+.feedback-item {
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.feedback-item.ok {
+  background: var(--ok);
+}
+
+.feedback-item.bad {
+  background: var(--bad);
+}
+
+.feedback-item.warn {
+  background: var(--warn);
+}
+
+.feedback-item strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.coach {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+
+.coach section {
+  padding: 18px;
+}
+
+.coach h2 {
+  font-size: 17px;
+}
+
+.coach ul {
+  padding-left: 18px;
+  margin-bottom: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 1050px) {
+  .app-shell {
+    grid-template-columns: 260px 1fr;
+  }
+
+  .coach {
+    grid-column: 1 / -1;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar,
+  .coach {
+    border: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .trainer {
+    padding: 20px;
+  }
+}
