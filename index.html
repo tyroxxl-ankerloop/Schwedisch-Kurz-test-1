@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Schwedisch Kurs von J</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles-voci7.css" />
   </head>
   <body>
     <main class="app-shell">
@@ -43,8 +43,8 @@
           </div>
           <div class="header-tools">
             <div class="char-tools" aria-label="Schwedische Sonderzeichen">
-              <button class="char-button" data-copy-char="Å" data-tooltip="hover = copy" title="Å kopieren" type="button">Å</button>
-              <button class="char-button" data-copy-char="å" data-tooltip="hover = copy" title="å kopieren" type="button">å</button>
+              <button class="char-button" data-copy-char="Å" data-tooltip="copy" title="Å kopieren" type="button">Å</button>
+              <button class="char-button" data-copy-char="å" data-tooltip="copy" title="å kopieren" type="button">å</button>
             </div>
             <button id="resetBtn" class="reset-button" title="Fortschritt zurücksetzen" type="button">Alles zurücksetzen</button>
           </div>
@@ -66,9 +66,12 @@
           <textarea id="answerInput" rows="7" spellcheck="false" placeholder="Schreibe hier 4-6 kurze Sätze..."></textarea>
           <div class="actions">
             <button type="submit">Prüfen</button>
-            <button id="nextBtn" class="secondary hidden" type="button">WEITER</button>
           </div>
         </form>
+
+        <div class="flow-actions">
+          <button id="nextBtn" class="secondary hidden" type="button">WEITER</button>
+        </div>
 
         <section id="feedback" class="feedback hidden" aria-live="polite"></section>
       </section>
@@ -81,6 +84,11 @@
         <section>
           <h2>Bereit für danach</h2>
           <p id="nextHint">Wenn du ein Muster zweimal korrekt anwendest, schaltet der Trainer weiter.</p>
+        </section>
+        <section>
+          <h2>Stimmen-Debug</h2>
+          <button id="voiceDebugBtn" class="secondary debug-button" type="button">Gefundene Stimmen anzeigen</button>
+          <div id="voiceDebugPanel" class="voice-debug hidden"></div>
         </section>
       </aside>
     </main>
@@ -97,12 +105,12 @@
     </div>
 
     <script>
-      const build = "20260601-voci2";
+      const build = "20260602-voci7";
       if (localStorage.getItem("svenska-a1-build") !== build) {
         localStorage.removeItem("svenska-a1-state");
         localStorage.setItem("svenska-a1-build", build);
       }
     </script>
-    <script src="app.js?v=20260601-voci2"></script>
+    <script src="app-voci7.js"></script>
   </body>
 </html>
