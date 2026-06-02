@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260602-voci8";
+const DATA_VERSION = "20260602-voci9";
 const byId = (id) => document.getElementById(id);
 const baseModules = [
   ["start","Start: hej und tack","Begrüßung, Höflichkeit",["Hallo!","Danke.","Entschuldigung.","Auf Wiedersehen."],["Hej!","Tack.","Ursäkta.","Hej då."]],
@@ -35,7 +35,7 @@ const baseModules = [
 ];
 const modules = baseModules.map(([id,title,tag,tasks,expected]) => ({ id,title,tag,tasks:tasks.map((t)=>`Schreibe: ${t}`),expected }));
 const extraWords = {
-  start:[["God morgon","Guten Morgen"],["Ja","Ja"],["Nej","Nein"],["Varsågod","Bitte / gern"]],
+  start:[["Hej","Hallo"],["Tack","Danke"],["Ursäkta","Entschuldigung"],["Hej då","Auf Wiedersehen"],["God morgon","Guten Morgen"],["Ja","Ja"],["Nej","Nein"],["Varsågod","Bitte / gern"]],
   intro:[["Sverige","Schweden"],["Schweiz","Schweiz"],["bor","wohne"],["kommer från","komme aus"],["lite","ein bisschen"]],
   questions:[["Vad","Was"],["Var","Wo"],["Vilka","Welche"],["Kan","Kann"],["du","du"]],
   numbers:[["noll","null"],["ett","eins"],["två","zwei"],["tre","drei"],["åtta","acht"],["hundra","hundert"]],
@@ -60,8 +60,8 @@ function isUnlocked(index){return index===0||modules.slice(0,index).every((m)=>g
 function activeModule(){let index=moduleIndex(state.activeModule);if(index<0||!isUnlocked(index)){index=modules.findIndex((_,i)=>isUnlocked(i));state.activeModule=modules[Math.max(0,index)].id}return modules.find((m)=>m.id===state.activeModule)||modules[0]}
 function normalize(text){return text.toLowerCase().replace(/[.,!?]/g,"").replace(/\s+/g," ").trim()}
 function strip(text){return text.replace(/[.,!?]/g,"").trim()}
-function getVocab(module){const fromExpected=module.expected.flatMap((sentence)=>strip(sentence).split(" ")).filter((w)=>w.length>1).map((sv)=>[sv,guessGerman(sv)]);const merged=[...(extraWords[module.id]||[]),...fromExpected,...filler];const seen=new Set();return merged.filter(([sv])=>{const key=sv.toLowerCase();if(seen.has(key))return false;seen.add(key);return true}).slice(0,14).map(([sv,de],i)=>({sv,de,hint:hints[i%hints.length]}))}
-function guessGerman(sv){const map={Jag:"Ich",heter:"heiße",kommer:"komme",från:"aus",bor:"wohne",talar:"spreche",svenska:"Schwedisch",är:"bin / ist",har:"habe",inte:"nicht",vill:"will / möchte",kan:"kann",lära:"lernen",mig:"mich / mir",kaffe:"Kaffee",barn:"Kind / Kinder",Tack:"Danke",Hej:"Hallo"};return map[sv]||sv}
+function getVocab(module){const phraseVocab=module.expected.map((sentence,index)=>[strip(sentence),strip(baseModules[moduleIndex(module.id)]?.[3]?.[index]||guessGerman(strip(sentence)))]);const fromExpected=module.expected.flatMap((sentence)=>strip(sentence).split(" ")).filter((w)=>w.length>1).map((sv)=>[sv,guessGerman(sv)]).filter(([,de])=>de);const merged=[...(extraWords[module.id]||[]),...phraseVocab,...fromExpected,...filler];const seen=new Set();return merged.filter(([sv,de])=>{const key=sv.toLowerCase();if(!de||seen.has(key))return false;seen.add(key);return true}).slice(0,14).map(([sv,de],i)=>({sv,de,hint:hints[i%hints.length]}))}
+function guessGerman(sv){const map={Hej:"Hallo","Hej då":"Auf Wiedersehen",Tack:"Danke","Ursäkta":"Entschuldigung","God morgon":"Guten Morgen",Ja:"Ja",Nej:"Nein","Varsågod":"Bitte / gern",Jag:"Ich",Du:"Du",Han:"Er",Hon:"Sie",Vi:"Wir",De:"Sie",Ni:"Ihr / Sie",heter:"heiße",kommer:"komme",från:"aus",bor:"wohne",talar:"spreche",svenska:"Schwedisch",tyska:"Deutsch",engelska:"Englisch",är:"bin / bist / ist / sind",snäll:"nett",trött:"müde",Schweiz:"Schweiz",Sverige:"Schweden",har:"habe / hat",inte:"nicht",vill:"will / möchte",kan:"kann",lära:"lernen",läser:"lerne / lese",mig:"mich / mir",sig:"sich",lite:"ein bisschen",mycket:"viel",kaffe:"Kaffee",barn:"Kind / Kinder",familj:"Familie",syster:"Schwester",bror:"Bruder",mamma:"Mutter",pappa:"Vater",bil:"Auto",Bilen:"das Auto",hus:"Haus",Huset:"das Haus",frukost:"Frühstück",vatten:"Wasser",bröd:"Brot",biljett:"Ticket",stationen:"Bahnhof",idag:"heute",imorgon:"morgen",åtta:"acht",klockan:"Uhr",kostar:"kostet",kronor:"Kronen"};return map[sv]||""}
 function getVocabRound(module){const words=getVocab(module);const start=(getModuleState(module).vocabVariant*3)%words.length;return Array.from({length:Math.min(10,words.length)},(_,i)=>words[(start+i)%words.length])}
 function getChoices(correct,module){const all=[...getVocab(module),...filler.map(([sv,de])=>({sv,de}))].map((x)=>x.de).filter((de)=>de!==correct.de);return [correct.de,...all.slice(0,3)].sort((a,b)=>a.localeCompare(b,"de"))}
 function exercise(module){const extras=getVocabRound(module).filter((item)=>!module.expected.some((sentence)=>normalize(sentence).includes(normalize(item.sv)))).slice(0,4);return {tasks:[...module.tasks,...extras.map((item)=>`Zusatz: Schreibe "${item.de}".`)],expected:[...module.expected,...extras.map((item)=>item.sv)]}}
