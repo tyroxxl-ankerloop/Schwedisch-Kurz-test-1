@@ -43,8 +43,8 @@
           </div>
           <div class="header-tools">
             <div class="char-tools" aria-label="Schwedische Sonderzeichen">
-              <button class="char-button" data-copy-char="Å" data-tooltip="copy" title="Å kopieren" type="button">Å</button>
-              <button class="char-button" data-copy-char="å" data-tooltip="copy" title="å kopieren" type="button">å</button>
+              <button class="char-button" data-copy-char="Å" data-tooltip="hover = copy" title="Å kopieren" type="button">Å</button>
+              <button class="char-button" data-copy-char="å" data-tooltip="hover = copy" title="å kopieren" type="button">å</button>
             </div>
             <button id="resetBtn" class="reset-button" title="Fortschritt zurücksetzen" type="button">Alles zurücksetzen</button>
           </div>
@@ -76,21 +76,6 @@
         <section id="feedback" class="feedback hidden" aria-live="polite"></section>
       </section>
 
-      <aside class="coach">
-        <section>
-          <h2>Fehlerfokus</h2>
-          <ul id="errorFocus"></ul>
-        </section>
-        <section>
-          <h2>Bereit für danach</h2>
-          <p id="nextHint">Wenn du Voci und die längere Übung korrekt löst, schaltet der Trainer weiter.</p>
-        </section>
-        <section>
-          <h2>Stimmen-Debug</h2>
-          <button id="voiceDebugBtn" class="secondary debug-button" type="button">Gefundene Stimmen anzeigen</button>
-          <div id="voiceDebugPanel" class="voice-debug hidden"></div>
-        </section>
-      </aside>
     </main>
 
     <div id="celebration" class="celebration" aria-hidden="true">
@@ -105,7 +90,7 @@
     </div>
 
     <script>
-      const build = "20260602-voci11";
+      const build = "20260602-voci12";
       if (localStorage.getItem("svenska-a1-build") !== build) {
         localStorage.removeItem("svenska-a1-state");
         localStorage.setItem("svenska-a1-build", build);
