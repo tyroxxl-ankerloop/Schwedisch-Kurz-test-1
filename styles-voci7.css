@@ -141,7 +141,6 @@ textarea:focus { outline: 3px solid rgb(27 122 104 / .14); border-color: var(--a
 .speak-button { min-width: 42px; min-height: 34px; padding: 0 10px; border: 1px solid var(--accent); background: white; color: var(--accent); }
 .speak-button.slow { border-color: var(--accent-2); color: var(--accent-2); }
 
-.voice-debug { margin-top: 10px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcfb; color: var(--muted); font-size: 12px; line-height: 1.35; max-height: 220px; overflow: auto; }
 .hidden { display: none !important; }
 
 .celebration { position: fixed; top: 18%; left: -420px; width: 420px; height: 230px; pointer-events: none; opacity: 0; z-index: 20; }
