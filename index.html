@@ -46,6 +46,7 @@
               <button class="char-button" data-copy-char="Å" data-tooltip="hover = copy" title="Å kopieren" type="button">Å</button>
               <button class="char-button" data-copy-char="å" data-tooltip="hover = copy" title="å kopieren" type="button">å</button>
             </div>
+            <button id="themeBtn" class="theme-button" title="Hell/Dunkel wechseln" type="button">Dunkel</button>
             <button id="resetBtn" class="reset-button" title="Fortschritt zurücksetzen" type="button">Alles zurücksetzen</button>
           </div>
         </header>
@@ -90,12 +91,12 @@
     </div>
 
     <script>
-      const build = "20260602-voci13";
+      const build = "20260608-voci14";
       if (localStorage.getItem("svenska-a1-build") !== build) {
         localStorage.removeItem("svenska-a1-state");
         localStorage.setItem("svenska-a1-build", build);
       }
     </script>
-    <script src="app-voci7.js"></script>
+    <script src="app-voci14-loader.js?v=20260608-voci14"></script>
   </body>
 </html>
